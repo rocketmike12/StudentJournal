@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Журнал оценок{% endblock title %}
+{% block content %}
+    <h1>Добро пожаловать в журнал оценок</h1>
+    <h2>Посещение:</h2>
+    <ul>
+        <li><a href="/attendance">Таблица посещения</a></li>
+    </ul>
+    <h2>Оценки по месяцам:</h2>
+    <ul>
+        <li><a href="/september">Сентябрь</a></li>
+        <li><a href="/october">Октябрь</a></li>
+        <li><a href="/november">Ноябрь</a></li>
+        <li><a href="/december">Декабрь</a></li>
+        <li><a href="/january">Январь</a></li>
+        <li><a href="/february">Февраль</a></li>
+        <li><a href="/march">Март</a></li>
+        <li><a href="/april">Апрель</a></li>
+        <li><a href="/may">Май</a></li>
+    </ul>
+    <h2>Успеваемость:</h2>
+    <ul>
+        <li><a href="/success">Отслеживание успеваемости</a></li>
+    </ul>
+    <h2>Для администрации</h2>
+    <a href="/admin">/admin/</a>
+{% endblock %}

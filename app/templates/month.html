@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}
+    {% if month == 0 %}
+    Сентябрь
+    {% elif month == 1 %}
+    Октябрь
+    {% elif month == 2 %}
+    Ноябрь
+    {% elif month == 3 %}
+    Декабрь
+    {% elif month == 4 %}
+    Январь
+    {% elif month == 5 %}
+    Февраль
+    {% elif month == 6 %}
+    Март
+    {% elif month == 7 %}
+    Апрель
+    {% elif month == 8 %}
+    Май
+    {% endif %}
+{% endblock title %}
+{% block content %}
+
+<h1>
+    {% if month == 0 %}
+    Сентябрь
+    {% elif month == 1 %}
+    Октябрь
+    {% elif month == 2 %}
+    Ноябрь
+    {% elif month == 3 %}
+    Декабрь
+    {% elif month == 4 %}
+    Январь
+    {% elif month == 5 %}
+    Февраль
+    {% elif month == 6 %}
+    Март
+    {% elif month == 7 %}
+    Апрель
+    {% elif month == 8 %}
+    Май
+    {% endif %}
+</h1>
+
+<form style="width: min-content; border: 2px solid black; padding: 5px; margin-bottom: 30px;" method="post">
+    {% csrf_token %}
+    <h3>Добавить оценку</h3>
+    {% for field in form %}
+        {{ field.label }}
+        <br>
+        {{ field }}
+        <br>
+    {% endfor %}
+    <button type="submit">Добавить</button>
+</form>
+
+{% for subject in subjects %}
+    <table border="">
+        <thead>
+            <tr>
+                <th colspan="100%">{{ subject.subject }}</th>
+            </tr>
+            <tr>
+                <th>№</th>
+                <th>Имя</th>
+                {% for day in subject.days %}
+                    <th>{{ day }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in subject.students %}
+                <tr>
+                    <td>{{ student.idx }}</td>
+                    <td>{{ student.name }}</td>
+                    {% for mark in student.marks %}
+                        <td>{{ mark.mark }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endfor %}
+
+{% endblock content %}

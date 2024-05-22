@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Посещаемость{% endblock title %}
+{% block content %}
+    <h1>Таблица посещаемости</h1>
+    <table border="1" style="overflow-y: scroll; display:block;">
+        <thead>
+            <tr>
+                <th rowspan="2">Студент</th>
+                <th colspan="30">Сентябрь</th>
+                <th colspan="31">Октябрь</th>
+                <th colspan="30">Ноябрь</th>
+                <th colspan="31">Декабрь</th>
+                <th colspan="31">Январь</th>
+                <th colspan="28">Февраль</th>
+                <th colspan="31">Март</th>
+                <th colspan="30">Апрель</th>
+                <th colspan="31">Май</th>
+            </tr>
+            <tr>
+                {% for month in calendar %}
+                    {% for day in month %}
+                        <td>{{ day }}</td>
+                    {% endfor %}
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+                <tr>
+                    <td>{{ student.name }}</td>
+                    {% for month in student.attendance %}
+                        {% for day in month %}
+                            <td>{{ day }}</td>
+                        {% endfor %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <form style="width: min-content; border: 2px solid black; padding: 5px; margin-bottom: 30px;" method="post">
+        {% csrf_token %}
+
+        <h3>Добавить отметку о посещении</h3>
+
+        <label>Отметка</label>
+        <select name="tick">
+            <option selected>---------</option>
+            <option value="✓">✓</option>
+            <option value="✗">✗</option>
+        </select>
+
+        <label>Месяц</label>
+        <select name="month">
+            <option>---------</option>
+            <option value="0">Сентябрь</option>
+            <option value="1">Октябрь</option>
+            <option value="2">Ноябрь</option>
+            <option value="3">Декабрь</option>
+            <option value="4">Январь</option>
+            <option value="5">Февраль</option>
+            <option value="6">Март</option>
+            <option value="7">Апрель</option>
+            <option value="8">Май</option>
+        </select>
+
+        <label>День</label>
+        <input type="number" name="day" min="1" max="31">
+        <label>Студент</label>
+        <select name="student">
+            <option selected>---------</option>
+            {% for student in students %}
+                <option value="{{ student.id }}">{{ student }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Добавить</button>
+    </form>
+{% endblock content %}

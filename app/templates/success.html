@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Успеваемость{% endblock title %}
+{% block content %}
+    <h1>Отслеживание успеваемости ученика</h1>
+    <form method="post">
+        {% csrf_token %}
+        <select name="student">
+            <option selected>---------</option>
+            {% for student in students %}
+                <option value="{{ student.id }}">{{ student }}</option>
+            {% endfor %}
+        </select>
+        <select name="subject">
+            <option selected>---------</option>
+            {% for subject in subjects %}
+                <option value="{{ subject.id }}">{{ subject }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Загрузить</button>
+    </form>
+
+    <div id="chart-container">
+        <canvas id="myLineChart"></canvas>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('myLineChart').getContext('2d');
+            var myLineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь', 'Январь', 'Февраль', 'Март', 'Апрель', 'Май'],
+                    datasets: [{
+                        label: 'Оценки',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        data: [{% for mark in target_student.marks %}{{ mark }}, {% endfor %}],
+                        fill: true,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Month'
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Value'
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock content %}
