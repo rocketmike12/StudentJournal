@@ -1,9 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from .models import *
 from .forms import MarkForm
 from django.http import HttpResponseRedirect
 from .attendance import *
-import math
 
 # Create your views here.
 
@@ -14,7 +13,9 @@ def index(request):
 
 def attendance(request):
     if request.method == 'GET':
-        calendar_list = [list(range(1, 31)), list(range(1, 32)), list(range(1, 31)), list(range(1, 32)), list(range(1, 32)), list(range(1, 29)), list(range(1, 32)), list(range(1, 31)), list(range(1, 32))]
+        calendar_list = [list(range(1, 31)), list(range(1, 32)), list(range(1, 31)), list(range(1, 32)),
+                         list(range(1, 32)), list(range(1, 29)), list(range(1, 32)), list(range(1, 31)),
+                         list(range(1, 32))]
 
         students = Student.objects.all()
 
@@ -149,7 +150,8 @@ def success(request):
         target_subject = Subject.objects.filter(id=target_subject_id)[0]
         target_student.marks = []
         for month in range(0, 9):
-            monthly_marks = [int(m.mark) for m in MarkItem.objects.filter(month=month, student=target_student, subject=target_subject)]
+            monthly_marks = [int(m.mark) for m in MarkItem.objects.filter(month=month, student=target_student,
+                                                                          subject=target_subject)]
             try:
                 monthly_mark = sum(monthly_marks)/(len(monthly_marks))
             except ZeroDivisionError:
